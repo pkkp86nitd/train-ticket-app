@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+option go_package = "./proto";
+
+package train_ticket_service;
+
+service TrainTicketService {
+    rpc SubmitPurchase(PurchaseRequest) returns (Receipt);
+    rpc ViewReceipt(ViewReceiptRequest) returns (Receipt);
+    rpc ViewUsersBySection(SectionRequest) returns (UsersBySectionResponse);
+    rpc RemoveUser(UserRequest) returns (RemoveUserResponse);
+    rpc ModifySeat(ModifySeatRequest) returns (ModifySeatResponse);
+}
+
+message PurchaseRequest {
+    string from = 1;
+    string to = 2;
+    string user_first_name = 3;
+    string user_last_name = 4;
+    string user_email = 5;
+}
+
+message ViewReceiptRequest {
+    string user_email = 1;
+}
+
+message SectionRequest {
+    string section = 1;
+}
+
+message UserRequest {
+    string user_email = 1;
+}
+
+message ModifySeatRequest {
+    string user_email = 1;
+    string new_section = 2;
+}
+
+message Receipt {
+    string from = 1;
+    string to = 2;
+    string user_first_name = 3;
+    string user_last_name = 4;
+    string user_email = 5;
+    string seat_section = 6;
+    int32 seat_number = 7;
+    double price_paid = 8;
+}
+
+message UsersBySectionResponse {
+    repeated UserSeat user_seats = 1;
+}
+
+message UserSeat {
+    string user_email = 1;
+    string seat_section = 2;
+    int32 seat_number = 3;
+}
+
+message RemoveUserResponse {
+    bool success = 1;
+}
+
+message ModifySeatResponse {
+    bool success = 1;
+}
